@@ -3,7 +3,7 @@ import { DeployFunction } from "hardhat-deploy/dist/types"
 import { ADDRESS_ZERO } from "../helper-hardhat-config"
 import { ethers } from "hardhat"
 
-const deployGovenorContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const  setupContracts: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { getNamedAccounts, deployments } = hre
     const { log } = deployments
     const { deployer } = await getNamedAccounts()
@@ -25,4 +25,4 @@ const deployGovenorContract: DeployFunction = async function (hre: HardhatRuntim
   await revokeTx.wait(1)
 }
 
-export default deployGovenorContract
+export default  setupContracts
