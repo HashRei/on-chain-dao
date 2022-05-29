@@ -25,3 +25,4 @@ const delegate = async (governanceTokenAddress: string, delegatedAccount: string
   await transactionResponse.wait(1)
 }
 export default deployGovernanceToken
+deployGovernanceToken.tags = ["all", "governor"]

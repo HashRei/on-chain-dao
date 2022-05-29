@@ -21,3 +21,4 @@ const deployNFTMarketplace: DeployFunction = async function (hre: HardhatRuntime
   await transferTx.wait(1)
 }
 export default deployNFTMarketplace
+deployNFTMarketplace.tags = ["all", "nftmarketplace"]

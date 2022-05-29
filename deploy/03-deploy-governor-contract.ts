@@ -25,3 +25,4 @@ const deployGovenorContract: DeployFunction = async function (hre: HardhatRuntim
 }
 
 export default deployGovenorContract
+deployGovenorContract.tags = ["all", "governor"]
