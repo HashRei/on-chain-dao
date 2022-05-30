@@ -1,35 +1,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/draft-ERC721Votes.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
-contract GovernanceToken is ERC721, ERC721Burnable, Ownable, EIP712, ERC721Votes {
-    using Counters for Counters.Counter;
+contract GovernanceToken is ERC20Votes {
+  uint256 public s_maxSupply = 1000000000000000000000000;
 
-    Counters.Counter private tokenIdCounter;
+  constructor() ERC20("GovernanceToken", "GOVT") ERC20Permit("GovernanceToken") {
+    _mint(msg.sender, s_maxSupply);
+  }
 
-    constructor()
-        ERC721("GovernanceToken", "GOVT")
-        EIP712("GovernanceToken", "1")
-    {}
+  // The functions below are overrides required by Solidity.
 
-    function safeMint(address to) public onlyOwner {
-        uint256 tokenId = tokenIdCounter.current();
-        tokenIdCounter.increment();
-        _safeMint(to, tokenId);
-    }
+  function _afterTokenTransfer(
+    address from,
+    address to,
+    uint256 amount
+  ) internal override(ERC20Votes) {
+    super._afterTokenTransfer(from, to, amount);
+  }
 
-    // The following functions are overrides required by Solidity.
+  function _mint(address to, uint256 amount) internal override(ERC20Votes) {
+    super._mint(to, amount);
+  }
 
-    function _afterTokenTransfer(address from, address to, uint256 tokenId)
-        internal
-        override(ERC721, ERC721Votes)
-    {
-        super._afterTokenTransfer(from, to, tokenId);
-    }
+  function _burn(address account, uint256 amount) internal override(ERC20Votes) {
+    super._burn(account, amount);
+  }
 }
