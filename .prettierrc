@@ -1,1 +1,6 @@
-{}
+{
+    "tabWidth": 2,
+    "printWidth": 240,
+    "semi": false,
+    "trailingComma": "none"
+}
