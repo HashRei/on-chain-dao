@@ -10,7 +10,7 @@ contract NFTMarketplace is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
 
     /** VARIABLES **/
-    Counters.Counter private tokenIds;
+    Counters.Counter public tokenIds;
     Counters.Counter private itemsBurned;
 
     mapping(uint256 => MarketItem) private idToMarketItem;
