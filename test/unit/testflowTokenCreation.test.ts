@@ -1,7 +1,7 @@
 import { GovernorContract, GovernanceToken, TimeLock, NFTMarketplace } from "../../typechain"
 import { deployments, ethers } from "hardhat"
 import { assert, expect } from "chai"
-import { FUNC, PROPOSAL_DESCRIPTION, VOTING_DELAY, VOTING_PERIOD, MIN_DELAY } from "../../helper-hardhat-config"
+import { CREATE_FUNC, CREATE_PROPOSAL_DESCRIPTION, VOTING_DELAY, VOTING_PERIOD, MIN_DELAY } from "../../helper-hardhat-config"
 import { moveBlocks } from "../../utils/move-block"
 import { moveTime } from "../../utils/move-time"
 import { BigNumber } from "ethers"
@@ -28,8 +28,8 @@ describe("DAO Flow", async () => {
 
   it("Should propose a token creation, vote, wait, queue, and then execute", async () => {
     /* PROPOSE */
-    const encodedFunctionCall = nftMarketplace.interface.encodeFunctionData(FUNC, ["https://www.mytokenlocation.com", price])
-    const proposeTx = await governor.propose([nftMarketplace.address], [0], [encodedFunctionCall], PROPOSAL_DESCRIPTION)
+    const encodedFunctionCall = nftMarketplace.interface.encodeFunctionData(CREATE_FUNC, ["https://www.mytokenlocation.com", price])
+    const proposeTx = await governor.propose([nftMarketplace.address], [0], [encodedFunctionCall], CREATE_PROPOSAL_DESCRIPTION)
 
     const proposeReceipt = await proposeTx.wait(1)
     const proposalId = proposeReceipt.events![0].args!.proposalId
@@ -47,7 +47,7 @@ describe("DAO Flow", async () => {
     await moveBlocks(VOTING_PERIOD + 1)
 
     /* QUEUE & EXECUTE */
-    const descriptionHash = ethers.utils.id(PROPOSAL_DESCRIPTION)
+    const descriptionHash = ethers.utils.id(CREATE_PROPOSAL_DESCRIPTION)
     const queueTx = await governor.queue([nftMarketplace.address], [0], [encodedFunctionCall], descriptionHash)
     await queueTx.wait(1)
     await moveTime(MIN_DELAY + 1)
