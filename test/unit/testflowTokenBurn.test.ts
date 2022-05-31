@@ -26,11 +26,10 @@ describe("DAO Flow", async () => {
     await expect(nftMarketplace.createToken("https://www.mytokenlocation.com", 1)).to.be.revertedWith("Ownable: caller is not the owner")
   })
 
-  it.only("Should propose a token creation, vote, wait, queue, and then execute", async () => {
-      
+  it("Should propose a token creation, vote, wait, queue, and then execute", async () => {
     /* TOKEN CREATION */
-    console.log("-------------------------------");
-    console.log("TOKEN MINT");
+    console.log("-------------------------------")
+    console.log("TOKEN MINT")
 
     /* PROPOSE TOKEN CREATION */
     const encodedFunctionCallCreate = nftMarketplace.interface.encodeFunctionData(CREATE_FUNC, ["https://www.mytokenlocation.com", price])
@@ -68,11 +67,11 @@ describe("DAO Flow", async () => {
     console.log(`Current Proposal State: ${proposalStateCreate}`)
     const nftTokenId = await nftMarketplace.tokenIds()
     console.log("nftTokenId", parseInt(nftTokenId.toString()))
-    console.log("-------------------------------");
+    console.log("-------------------------------")
     /* **************************************************** */
 
     /* TOKEN BURN */
-    console.log("TOKEN BURN");
+    console.log("TOKEN BURN")
 
     /* PROPOSE TOKEN BURN */
     const encodedFunctionCallBurn = nftMarketplace.interface.encodeFunctionData(BURN_FUNC, [nftTokenId])
@@ -109,5 +108,8 @@ describe("DAO Flow", async () => {
     proposalStateBurn = await governor.state(proposalIdBurn)
     console.log(`Current Proposal State: ${proposalStateBurn}`)
     console.log("NFTMarketplace content - should be empty", await nftMarketplace.fetchMarketItems())
+
+    // Checks
+    expect(await nftMarketplace.balanceOf(nftMarketplace.address)).to.equal(ethers.constants.Zero)
   })
 })

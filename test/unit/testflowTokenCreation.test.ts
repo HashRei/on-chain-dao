@@ -61,6 +61,8 @@ describe("DAO Flow", async () => {
     await exTx.wait(1)
     proposalState = await governor.state(proposalId)
     console.log(`Current Proposal State: ${proposalState}`)
-    console.log(await nftMarketplace.fetchMarketItems())
+
+    // Checks
+    expect(await nftMarketplace.balanceOf(nftMarketplace.address)).to.not.equal(ethers.constants.AddressZero);
   })
 })
