@@ -1,19 +1,18 @@
 import { GovernorContract, GovernanceToken, TimeLock, NFTMarketplace } from "../../typechain"
 import { deployments, ethers } from "hardhat"
 import { assert, expect } from "chai"
-import { CREATE_FUNC, CREATE_PROPOSAL_DESCRIPTION, VOTING_DELAY, VOTING_PERIOD, MIN_DELAY } from "../../helper-hardhat-config"
+import { CREATE_FUNC, CREATE_PROPOSAL_DESCRIPTION, VOTING_DELAY, VOTING_PERIOD, MIN_DELAY , CREATE_REASON} from "../../helper-hardhat-config"
 import { moveBlocks } from "../../utils/move-block"
 import { moveTime } from "../../utils/move-time"
 import { BigNumber } from "ethers"
 
-describe("DAO Flow", async () => {
+describe("DAO token creation flow", async () => {
   let governor: GovernorContract
   let governanceToken: GovernanceToken
   let timeLock: TimeLock
   let nftMarketplace: NFTMarketplace
   const price: BigNumber = ethers.utils.parseUnits("1", "ether")
   const voteWay = 1 // Vote: 0 = Against, 1 = For, 2 = Abstain for this example
-  const reason = "It is mandatory to have a monkey NFT"
   beforeEach(async () => {
     await deployments.fixture(["all"])
     governor = await ethers.getContract("GovernorContract")
@@ -39,7 +38,7 @@ describe("DAO Flow", async () => {
     await moveBlocks(VOTING_DELAY + 1)
 
     /* VOTE */
-    const voteTx = await governor.castVoteWithReason(proposalId, voteWay, reason)
+    const voteTx = await governor.castVoteWithReason(proposalId, voteWay, CREATE_REASON)
     await voteTx.wait(1)
     proposalState = await governor.state(proposalId)
     assert.equal(proposalState.toString(), "1")
@@ -63,6 +62,6 @@ describe("DAO Flow", async () => {
     console.log(`Current Proposal State: ${proposalState}`)
 
     // Checks
-    expect(await nftMarketplace.balanceOf(nftMarketplace.address)).to.not.equal(ethers.constants.AddressZero);
+    expect(await nftMarketplace.balanceOf(nftMarketplace.address)).to.not.equal(ethers.constants.AddressZero)
   })
 })

@@ -1,19 +1,19 @@
 import { GovernorContract, GovernanceToken, TimeLock, NFTMarketplace } from "../../typechain"
 import { deployments, ethers } from "hardhat"
 import { assert, expect } from "chai"
-import { CREATE_FUNC, CREATE_PROPOSAL_DESCRIPTION, BURN_FUNC, BURN_PROPOSAL_DESCRIPTION, VOTING_DELAY, VOTING_PERIOD, MIN_DELAY } from "../../helper-hardhat-config"
+import { CREATE_FUNC, CREATE_PROPOSAL_DESCRIPTION, CREATE_REASON, BURN_FUNC, BURN_PROPOSAL_DESCRIPTION, BURN_REASON, VOTING_DELAY, VOTING_PERIOD, MIN_DELAY } from "../../helper-hardhat-config"
 import { moveBlocks } from "../../utils/move-block"
 import { moveTime } from "../../utils/move-time"
 import { BigNumber } from "ethers"
 
-describe("DAO Flow", async () => {
+describe("DAO token burn flow", async () => {
   let governor: GovernorContract
   let governanceToken: GovernanceToken
   let timeLock: TimeLock
   let nftMarketplace: NFTMarketplace
   const price: BigNumber = ethers.utils.parseUnits("1", "ether")
   const voteWay = 1 // Vote: 0 = Against, 1 = For, 2 = Abstain for this example
-  const reason = "It is mandatory to have a monkey NFT"
+
   beforeEach(async () => {
     await deployments.fixture(["all"])
     governor = await ethers.getContract("GovernorContract")
@@ -26,7 +26,7 @@ describe("DAO Flow", async () => {
     await expect(nftMarketplace.createToken("https://www.mytokenlocation.com", 1)).to.be.revertedWith("Ownable: caller is not the owner")
   })
 
-  it("Should propose a token creation, vote, wait, queue, and then execute", async () => {
+  it("Should propose a token creation and then propose a token burn", async () => {
     /* TOKEN CREATION */
     console.log("-------------------------------")
     console.log("TOKEN MINT")
@@ -43,7 +43,7 @@ describe("DAO Flow", async () => {
     await moveBlocks(VOTING_DELAY + 1)
 
     /* VOTE TOKEN CREATION */
-    const voteTxCreate = await governor.castVoteWithReason(proposalIdCreate, voteWay, reason)
+    const voteTxCreate = await governor.castVoteWithReason(proposalIdCreate, voteWay, CREATE_REASON)
     await voteTxCreate.wait(1)
     proposalStateCreate = await governor.state(proposalIdCreate)
     assert.equal(proposalStateCreate.toString(), "1")
@@ -84,15 +84,15 @@ describe("DAO Flow", async () => {
 
     await moveBlocks(VOTING_DELAY + 1)
 
-    /* VOTE TOKEN CREATION */
-    const voteTx = await governor.castVoteWithReason(proposalIdBurn, voteWay, reason)
+    /* VOTE TOKEN BURN */
+    const voteTx = await governor.castVoteWithReason(proposalIdBurn, voteWay, BURN_REASON)
     await voteTx.wait(1)
     proposalStateBurn = await governor.state(proposalIdBurn)
     assert.equal(proposalStateBurn.toString(), "1")
     console.log(`Current Proposal State: ${proposalStateBurn}`)
     await moveBlocks(VOTING_PERIOD + 1)
 
-    /* QUEUE & EXECUTE TOKEN CREATION */
+    /* QUEUE & EXECUTE TOKEN BURN */
     const descriptionHash = ethers.utils.id(BURN_PROPOSAL_DESCRIPTION)
     const queueTx = await governor.queue([nftMarketplace.address], [0], [encodedFunctionCallBurn], descriptionHash)
     await queueTx.wait(1)
