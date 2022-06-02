@@ -20,9 +20,10 @@ Made by <a href="https://github.com/HashRei">@HashRei</a>
 - A Testnet Mumbai project [Alchemy URL](https://alchemy.com/?a=673c802981)
 
 ### Build with...
+  ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)</br></br>
   ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
    <h4>Hardhat</h4>
-  
+   
   ![Yarn](https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white)
 
 ## Quickstart
