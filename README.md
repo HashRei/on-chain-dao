@@ -1,46 +1,71 @@
-# Advanced Sample Hardhat Project
+Made by <a href="https://github.com/HashRei">@HashRei</a>
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+# Getting Started
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+## Requirements
 
-Try running some of the following tasks:
+- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+  - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
+- [Nodejs & npm](https://nodejs.org/en/)
+  - You'll know you've installed nodejs right if you can run:
+    - `node --version` And get an ouput like: `vx.x.x`
+  - You'll know you've installed npx right if you can run:
+    - `npm --version` And get an ouput like: `x.x.x`
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) instead of `npm`
+  - You'll know you've installed yarn right if you can run:
+    - `yarn --version` And get an output like: `x.x.x`
+    - You might need to install it with npm
+- [Metamask](https://metamask.io/)
+  - This is a browser extension that lets you interact with the blockchain.
+- A Testnet Mumbai project [Alchemy URL](https://alchemy.com/?a=673c802981)
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+### Build with...
+  ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
+   <h4>Hardhat</h4>
+  
+  ![Yarn](https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white)
+
+## Quickstart
+
+1. Clone and install dependencies
+
+```
+git clone https://github.com/HashRei/on-chain-dao.git
+cd on-chain-dao
+yarn
 ```
 
-# Etherscan verification
+2. Run
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/deploy.ts
 ```
-
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
+yarn dev
 ```
+3. Select the Rinkeby network in Metamask
 
-# Performance optimizations
+  
+  
+4. Get some Testnet ETH for Rinkeby
 
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+https://rinkebyfaucet.com/
+
+https://www.rinkedry.xyz/
+
+https://fauceth.komputing.org/
+
+5. Now, you have to get some GOVT tokens. Good luck 🍀
+
+
+## Deployed version 👇
+https://www.tally.xyz/governance/eip155:4:0xBBFc55Fb69e7D940B3fA3B637c8E0C22704b681f
+#
+
+📫 How to contact me: 
+[![Protonmail Badge](https://img.shields.io/badge/ProtonMail-8B89CC?style=for-the-badge&logo=protonmail&logoColor=white&link=mailto:hashrei@protonmail.com)](mailto:hashrei@protonmail.com)
+<a href="https://t.me/HashRei_Real" target="_blank">
+ ![Telegram](https://img.shields.io/badge/Telegram-white?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNCAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtOS40MTcgMTUuMTgxLS4zOTcgNS41ODRjLjU2OCAwIC44MTQtLjI0NCAxLjEwOS0uNTM3bDIuNjYzLTIuNTQ1IDUuNTE4IDQuMDQxYzEuMDEyLjU2NCAxLjcyNS4yNjcgMS45OTgtLjkzMWwzLjYyMi0xNi45NzIuMDAxLS4wMDFjLjMyMS0xLjQ5Ni0uNTQxLTIuMDgxLTEuNTI3LTEuNzE0bC0yMS4yOSA4LjE1MWMtMS40NTMuNTY0LTEuNDMxIDEuMzc0LS4yNDcgMS43NDFsNS40NDMgMS42OTMgMTIuNjQzLTcuOTExYy41OTUtLjM5NCAxLjEzNi0uMTc2LjY5MS4yMTh6IiBmaWxsPSIjMDM5YmU1Ii8+PC9zdmc+) 
+</a> 
+<a href="https://twitter.com/HashRei_" target="_blank">
+  ![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)
+</a>
+
+Made by <a href="https://github.com/HashRei">@HashRei</a>
